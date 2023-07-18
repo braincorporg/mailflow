@@ -86,18 +86,18 @@ def analyse_email(email: Email):
     )
 
     arguments = response.choices[0]["message"]["function_call"]["arguments"]
-    companyName = eval(arguments).get("companyName")
-    priority = eval(arguments).get("priority")
-    product = eval(arguments).get("product")
-    amount = eval(arguments).get("amount")
+    senderName = eval(arguments).get("senderName")
+    senderOrganization = eval(arguments).get("senderOrganization")
+    emailPurpose = eval(arguments).get("emailPurpose")
     category = eval(arguments).get("category")
     nextStep = eval(arguments).get("nextStep")
+    priority = eval(arguments).get("priority")
 
     return {
-        "companyName": companyName,
-        "product": product,
-        "amount": amount,
-        "priority": priority,
+        "senderName": senderName,
+        "senderOrganization": senderOrganization,
+        "emailPurpose": emailPurpose,
         "category": category,
-        "nextStep": nextStep
+        "nextStep": nextStep,
+        "priority": priority
     }
