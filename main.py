@@ -68,7 +68,7 @@ class Email(BaseModel):
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "GeneralKenobi"}
 
 @app.post("/")
 def analyse_email(email: Email):
