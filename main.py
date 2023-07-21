@@ -7,7 +7,7 @@ app = FastAPI()
 
 AIRTABLE_API_KEY = os.getenv("AIRTABLE_TOKEN")
 AIRTABLE_BASE_ID = os.getenv("BASE_ID")
-AIRTABLE_TABLE_NAME = os.getenv("TABLE_NAME")
+AIRTABLE_TABLE_NAME = os.getenv("TABLE_ID")
 
 def write_to_airtable(name, email, project, budget):
     headers = {
