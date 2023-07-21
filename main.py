@@ -1,7 +1,43 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+import requests
+import os
 
 app = FastAPI()
+
+AIRTABLE_API_KEY = os.getenv("AIRTABLE_TOKEN")
+AIRTABLE_BASE_ID = os.getenv("BASE_ID")
+AIRTABLE_TABLE_NAME = os.getenv("TABLE_NAME")
+
+def write_to_airtable(name, email, project, budget):
+    headers = {
+        'Authorization': f'Bearer {AIRTABLE_API_KEY}',
+        'Content-Type': 'application/json'
+    }
+
+    data = {
+        "records": [
+            {
+                "fields": {
+                    "name": name,
+                    "email": email,
+                    "project": project,
+                    "budget": budget
+                }
+            }
+        ]
+    }
+
+    response = requests.post(
+        f'https://api.airtable.com/v0/{AIRTABLE_BASE_ID}/{AIRTABLE_TABLE_NAME}',
+        headers=headers,
+        json=data
+    )
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return response.status_code
 
 class Item(BaseModel):
     name: str
@@ -11,4 +47,5 @@ class Item(BaseModel):
 
 @app.post("/api/submit")
 async def create_item(item: Item):
-    return {"name": item.name, "email": item.email, "project": item.project, "budget": item.budget}
+    response = write_to_airtable(item.name, item.email, item.project, item.budget)
+    return response
