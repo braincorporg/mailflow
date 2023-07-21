@@ -2,8 +2,21 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import requests
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    "https://braincorp.fr",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 AIRTABLE_API_KEY = os.getenv("AIRTABLE_TOKEN")
 AIRTABLE_BASE_ID = os.getenv("BASE_ID")
