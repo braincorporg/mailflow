@@ -19,8 +19,8 @@ def write_to_airtable(name, email, project, budget):
         "records": [
             {
                 "fields": {
-                    "name": name,
-                    "email": email,
+                    "Name": name,
+                    "Email": email,
                     "project": project,
                     "budget": budget
                 }
